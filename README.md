@@ -1,5 +1,4 @@
 
-<<<<<<< HEAD
 =======
 # 🐎 Horse Survival Analysis
 
@@ -66,4 +65,4 @@ All dependencies are listed in `requirements.txt`. Key libraries include:
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
->>>>>>> 5341145 (Update README.md with project details)
+
