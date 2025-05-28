@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Horse Survival Prediction</title>
+</head>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f8;
+      color: #333;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #34495e;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 8px 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="number"]:focus,
+    select:focus {
+      border-color: #2980b9;
+      outline: none;
+    }
+
+    button {
+      margin-top: 25px;
+      background-color: #2980b9;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1c5980;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      color: #27ae60;
+    }
+  </style>
+<body>
+    <h1> 🐴 Horse Survival Prediction</h1>
+
+    <form id="predictionForm" method="POST" action="/predict">
+        <!-- Categorical: surgery -->
+        <label for="surgery">Surgery:</label>
+        <select name="surgery" id="surgery" required>
+            <option value="no">no</option>
+            <option value="yes">yes</option>
+        </select><br/><br/>
+
+        <!-- Categorical: age -->
+        <label for="age">Age:</label>
+        <select name="age" id="age" required>
+            <option value="adult">adult</option>
+            <option value="young">young</option>
+        </select><br/><br/>
+
+        <!-- Numeric: hospital_number -->
+        <label for="hospital_number">Hospital Number:</label>
+        <input type="number" id="hospital_number" name="hospital_number" required /><br/><br/>
+
+        <!-- Numeric: rectal_temp -->
+        <label for="rectal_temp">Rectal Temperature:</label>
+        <input type="number" step="0.1" id="rectal_temp" name="rectal_temp" required /><br/><br/>
+
+        <!-- Numeric: pulse -->
+        <label for="pulse">Pulse:</label>
+        <input type="number" id="pulse" name="pulse" required /><br/><br/>
+
+        <!-- Numeric: respiratory_rate -->
+        <label for="respiratory_rate">Respiratory Rate:</label>
+        <input type="number" id="respiratory_rate" name="respiratory_rate" required /><br/><br/>
+
+        <!-- Categorical: temp_of_extremities -->
+        <label for="temp_of_extremities">Temperature of Extremities:</label>
+        <select name="temp_of_extremities" id="temp_of_extremities" required>
+            <option value="normal">normal</option>
+            <option value="warm">warm</option>
+            <option value="cool">cool</option>
+            <option value="cold">cold</option>
+        </select><br/><br/>
+
+        <!-- Categorical: peripheral_pulse -->
+        <label for="peripheral_pulse">Peripheral Pulse:</label>
+        <select name="peripheral_pulse" id="peripheral_pulse" required>
+            <option value="normal">normal</option>
+            <option value="increased">increased</option>
+            <option value="reduced">reduced</option>
+            <option value="absent">absent</option>
+        </select><br/><br/>
+
+        <!-- Categorical: mucous_membrane -->
+        <label for="mucous_membrane">Mucous Membrane:</label>
+        <select name="mucous_membrane" id="mucous_membrane" required>
+            <option value="normal">normal</option>
+            <option value="bright_pink">bright_pink</option>
+            <option value="pale_pink">pale_pink</option>
+            <option value="dark_pink">dark_pink</option>
+            <option value="purple">purple</option>
+            <option value="bright_red">bright_red</option>
+            <option value="brown">brown</option>
+            <option value="blue">blue</option>
+        </select><br/><br/>
+
+        <!-- Categorical: capillary_refill_time -->
+        <label for="capillary_refill_time">Capillary Refill Time:</label>
+        <select name="capillary_refill_time" id="capillary_refill_time" required>
+            <option value="less_3_sec">less_3_sec</option>
+            <option value="more_3_sec">more_3_sec</option>
+        </select><br/><br/>
+
+        <!-- Categorical: pain -->
+        <label for="pain">Pain:</label>
+        <select name="pain" id="pain" required>
+            <option value="no_pain">no_pain</option>
+            <option value="mild_pain">mild_pain</option>
+            <option value="moderate_pain">moderate_pain</option>
+            <option value="severe_pain">severe_pain</option>
+            <option value="extreme_pain">extreme_pain</option>
+        </select><br/><br/>
+
+        <!-- Categorical: peristalsis -->
+        <label for="peristalsis">Peristalsis:</label>
+        <select name="peristalsis" id="peristalsis" required>
+            <option value="normal">normal</option>
+            <option value="reduced">reduced</option>
+            <option value="absent">absent</option>
+        </select><br/><br/>
+
+        <!-- Categorical: abdominal_distention -->
+        <label for="abdominal_distention">Abdominal Distention:</label>
+        <select name="abdominal_distention" id="abdominal_distention" required>
+            <option value="none">none</option>
+            <option value="slight">slight</option>
+            <option value="severe">severe</option>
+        </select><br/><br/>
+
+        <!-- Categorical: nasogastric_tube -->
+        <label for="nasogastric_tube">Nasogastric Tube:</label>
+        <select name="nasogastric_tube" id="nasogastric_tube" required>
+            <option value="no">no</option>
+            <option value="yes">yes</option>
+        </select><br/><br/>
+
+        <!-- Categorical: nasogastric_reflux -->
+        <label for="nasogastric_reflux">Nasogastric Reflux:</label>
+        <select name="nasogastric_reflux" id="nasogastric_reflux" required>
+            <option value="no">no</option>
+            <option value="yes">yes</option>
+        </select><br/><br/>
+
+        <!-- Numeric: nasogastric_reflux_ph -->
+        <label for="nasogastric_reflux_ph">Nasogastric Reflux pH:</label>
+        <input type="number" step="0.01" id="nasogastric_reflux_ph" name="nasogastric_reflux_ph" required /><br/><br/>
+
+        <!-- Categorical: rectal_exam_feces -->
+        <label for="rectal_exam_feces">Rectal Exam Feces:</label>
+        <select name="rectal_exam_feces" id="rectal_exam_feces" required>
+            <option value="normal">normal</option>
+            <option value="increased_amount">increased_amount</option>
+            <option value="decreased_amount">decreased_amount</option>
+            <option value="absent">absent</option>
+        </select><br/><br/>
+
+        <!-- Categorical: abdomen -->
+        <label for="abdomen">Abdomen:</label>
+        <select name="abdomen" id="abdomen" required>
+            <option value="normal">normal</option>
+            <option value="distend_large">distend_large</option>
+            <option value="distend_small">distend_small</option>
+            <option value="other">other</option>
+        </select><br/><br/>
+
+        <!-- Numeric: packed_cell_volume -->
+        <label for="packed_cell_volume">Packed Cell Volume:</label>
+        <input type="number" step="0.1" id="packed_cell_volume" name="packed_cell_volume" required /><br/><br/>
+
+        <!-- Numeric: total_protein -->
+        <label for="total_protein">Total Protein:</label>
+        <input type="number" step="0.1" id="total_protein" name="total_protein" required /><br/><br/>
+
+        <!-- Categorical: abdomo_appearance -->
+        <label for="abdomo_appearance">Abdomo Appearance:</label>
+        <select name="abdomo_appearance" id="abdomo_appearance" required>
+            <option value="normal">normal</option>
+            <option value="abnormal">abnormal</option>
+            <option value="NA">NA</option>
+        </select><br/><br/>
+
+        <!-- Numeric: abdomo_protein -->
+        <label for="abdomo_protein">Abdomo Protein:</label>
+        <input type="number" step="0.1" id="abdomo_protein" name="abdomo_protein" required /><br/><br/>
+
+        <!-- Categorical: surgical_lesion -->
+        <label for="surgical_lesion">Surgical Lesion:</label>
+        <select name="surgical_lesion" id="surgical_lesion" required>
+            <option value="no">no</option>
+            <option value="yes">yes</option>
+        </select><br/><br/>
+
+        <!-- Numeric: lesion_1 -->
+        <label for="lesion_1">Lesion 1:</label>
+        <input type="number" id="lesion_1" name="lesion_1" required /><br/><br/>
+
+        <!-- Numeric: lesion_2 -->
+        <label for="lesion_2">Lesion 2:</label>
+        <input type="number" id="lesion_2" name="lesion_2" required /><br/><br/>
+
+        <!-- Numeric: lesion_3 -->
+        <label for="lesion_3">Lesion 3:</label>
+        <input type="number" id="lesion_3" name="lesion_3" required /><br/><br/>
+
+        <!-- Categorical: cp_data -->
+        <label for="cp_data">CP Data:</label>
+        <select name="cp_data" id="cp_data" required>
+            <option value="no">no</option>
+            <option value="yes">yes</option>
+        </select><br/><br/>
+
+        <button type="submit">Predict Outcome</button>
+    </form>
+    <h1>Prediction Result</h1>
+    <div id="result"></div>
+    
+
+    <script>
+        // Optional: Use JavaScript fetch API to handle form submission asynchronously
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);
+
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new URLSearchParams(data)
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = "Predicted Outcome: " + result.prediction;
+        });
+    </script>
+</body>
+</html>
